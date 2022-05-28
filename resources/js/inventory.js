@@ -22,7 +22,7 @@ window.document.onkeydown = function(event){
             headers: {
                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
             },    
-            url: '/inventory/' + scan_info.value,
+            url: '/ivy/inventory/' + scan_info.value,
             type: 'GET',
             dataType: 'json',
             success: function(data){
