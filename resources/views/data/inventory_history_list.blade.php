@@ -40,7 +40,7 @@
         <div class="my-5">
             {{ $inventory_histories->appends(request()->input())->links() }}
         </div>
-        <div class="overflow-x-scroll">
+        <div class="overflow-x-auto">
             <!-- 棚卸履歴一覧 -->
             <table class="text-xs mb-5 min-w-full">
                 <thead>

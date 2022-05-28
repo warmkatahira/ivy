@@ -31,7 +31,7 @@
         <div class="my-5">
             {{ $items->appends(request()->input())->links() }}
         </div>
-        <div class="overflow-x-scroll">
+        <div class="overflow-x-auto">
             <!-- 商品一覧 -->
             <table class="text-xs mb-5 min-w-full">
                 <thead>
