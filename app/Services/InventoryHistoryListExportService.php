@@ -11,7 +11,7 @@ class InventoryHistoryListExportService
         // 出力用の変数を初期化
         $export = [];
         // 日本語のカラム名を定義
-        $jp_key = ['棚卸日', '棚卸時間', '棚卸作業者', '商品コード', '個別JAN', 'ブランド名', '商品名1', '商品名2', '棚卸数', '在庫数', '棚卸結果'];
+        $jp_key = ['棚卸日', '棚卸時間', '実施者', '商品コード', '個別JAN', 'ブランド名', '商品名1', '商品名2', '棚卸数', '在庫数', '棚卸結果'];
         // 出力対象の分だけループ
         foreach($inventory_history_list_export as $inventory_history)
         {

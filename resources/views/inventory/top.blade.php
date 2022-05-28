@@ -25,9 +25,9 @@
                 <label for="brand_name" class="py-1 text-base xl:text-xl col-span-12 xl:col-span-1"><i class="las la-info-circle la-lg"></i>ブランド名</label>
                 <div id="brand_name" class="text-xs xl:text-xl bg-indigo-200 h-8 py-2 xl:h-10 xl:py-2 col-span-12 xl:col-span-8"></div>
                 <label for="item_name_1" class="py-1 text-base xl:text-xl col-span-12 xl:col-span-1"><i class="las la-info-circle la-lg"></i>商品名1</label>
-                <div id="item_name_1" class="text-xs xl:text-xl bg-indigo-200 h-8 py-2 xl:h-10 xl:py-2 col-span-12 xl:col-span-11 whitespace-nowrap overflow-x-scroll"></div>
+                <div id="item_name_1" class="text-xs xl:text-xl bg-indigo-200 h-8 py-2 xl:h-10 xl:py-2 col-span-12 xl:col-span-11 whitespace-nowrap overflow-x-auto"></div>
                 <label for="item_name_2" class="py-1 text-base xl:text-xl col-span-12 xl:col-span-1"><i class="las la-info-circle la-lg"></i>商品名2</label>
-                <div id="item_name_2" class="text-xs xl:text-xl bg-indigo-200 h-8 py-2 xl:h-10 xl:py-2 col-span-12 xl:col-span-11 whitespace-nowrap overflow-x-scroll"></div>
+                <div id="item_name_2" class="text-xs xl:text-xl bg-indigo-200 h-8 py-2 xl:h-10 xl:py-2 col-span-12 xl:col-span-11 whitespace-nowrap overflow-x-auto"></div>
             </div>
         </div>
         <label for="scan_info" class="text-base xl:text-xl"><i class="las la-qrcode la-lg"></i>商品スキャン</label>

@@ -47,6 +47,7 @@
                     <tr class="text-left bg-teal-200 border-gray-600 sticky top-0 whitespace-nowrap">
                         <th class="p-2 px-2"><a href="{{ route('inventory_history_list.sort', ['sort_column' => 'inventory_date', 'direction' => ($sort_column != 'inventory_date' ? 'desc' : ($direction == 'asc' ? 'desc' : 'asc')) ]) }}">棚卸日</a>{{ strpos(url()->full(), 'sort/inventory_date') !== false ? strpos(url()->full(), 'asc') !== false ? '↑' : '↓' : Null }}</th>
                         <th class="p-2 px-2"><a href="{{ route('inventory_history_list.sort', ['sort_column' => 'inventory_time', 'direction' => ($sort_column != 'inventory_time' ? 'desc' : ($direction == 'asc' ? 'desc' : 'asc')) ]) }}">棚卸時間</a>{{ strpos(url()->full(), 'sort/inventory_time') !== false ? strpos(url()->full(), 'asc') !== false ? '↑' : '↓' : Null }}</th>
+                        <th class="p-2 px-2"><a href="{{ route('inventory_history_list.sort', ['sort_column' => 'operator_name', 'direction' => ($sort_column != 'operator_name' ? 'desc' : ($direction == 'asc' ? 'desc' : 'asc')) ]) }}">実施者</a>{{ strpos(url()->full(), 'sort/operator_name') !== false ? strpos(url()->full(), 'asc') !== false ? '↑' : '↓' : Null }}</th>
                         <th class="p-2 px-2"><a href="{{ route('inventory_history_list.sort', ['sort_column' => 'item_code', 'direction' => ($sort_column != 'item_code' ? 'desc' : ($direction == 'asc' ? 'desc' : 'asc')) ]) }}">商品コード</a>{{ strpos(url()->full(), 'sort/item_code') !== false ? strpos(url()->full(), 'asc') !== false ? '↑' : '↓' : Null }}</th>
                         <th class="p-2 px-2"><a href="{{ route('inventory_history_list.sort', ['sort_column' => 'individual_jan_code', 'direction' => ($sort_column != 'individual_jan_code' ? 'desc' : ($direction == 'asc' ? 'desc' : 'asc')) ]) }}">個別JAN</a>{{ strpos(url()->full(), 'sort/individual_jan_code') !== false ? strpos(url()->full(), 'asc') !== false ? '↑' : '↓' : Null }}</th>
                         <th class="p-2 px-2"><a href="{{ route('inventory_history_list.sort', ['sort_column' => 'brand_name', 'direction' => ($sort_column != 'brand_name' ? 'desc' : ($direction == 'asc' ? 'desc' : 'asc')) ]) }}">ブランド名</a>{{ strpos(url()->full(), 'sort/brand_name') !== false ? strpos(url()->full(), 'asc') !== false ? '↑' : '↓' : Null }}</th>
@@ -62,6 +63,7 @@
                         <tr id="tr_{{ $inventory_history->item_code }}" class="whitespace-nowrap">
                             <td class="p-1 px-2 border">{{ $inventory_history->inventory_date }}</td>
                             <td class="p-1 px-2 border">{{ $inventory_history->inventory_time }}</td>
+                            <td class="p-1 px-2 border">{{ $inventory_history->operator_name }}</td>
                             <td class="p-1 px-2 border">{{ $inventory_history->item_code }}</td>
                             <td class="p-1 px-2 border">{{ $inventory_history->individual_jan_code }}</td>
                             <td class="p-1 px-2 border">{{ $inventory_history->brand_name }}</td>
