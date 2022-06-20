@@ -7,6 +7,7 @@ use App\Http\Controllers\ItemMaintenanceController;
 use App\Http\Controllers\ItemListController;
 use App\Http\Controllers\InventoryController;
 use App\Http\Controllers\InventoryHistoryListController;
+use App\Http\Controllers\MyRecordController;
 
 /*
 |--------------------------------------------------------------------------
@@ -35,6 +36,7 @@ Route::group(['middleware' => 'auth'], function(){
     Route::get('/inventory', [InventoryController::class, 'top'])->name('inventory.top');
     Route::get('/inventory/{iten_info}', [InventoryController::class, 'ajax_process'])->name('inventory.ajax_process');
     Route::get('/inventory_confirm', [InventoryController::class, 'inventory_confirm'])->name('inventory.confirm');
+    Route::get('/inventory_cancel', [InventoryController::class, 'inventory_cancel'])->name('inventory.cancel');
 
 
     // データ
@@ -53,6 +55,7 @@ Route::group(['middleware' => 'auth'], function(){
     // メンテナンス
     Route::get('/maintenance', [MaintenanceController::class, 'top'])->name('maintenance.top');
     Route::get('/item_maintenance', [ItemMaintenanceController::class, 'top'])->name('item_maintenance.top');
+    Route::get('/item_data_import', [ItemMaintenanceController::class, 'data_import_top'])->name('item_maintenance.data_import_top');
     Route::post('/item_data_import', [ItemMaintenanceController::class, 'data_import'])->name('item_maintenance.data_import');
     Route::get('/item_master_import/validator_error_export', [ItemMaintenanceController::class, 'validator_error_export'])->name('item_maintenance.validator_error_export');
     Route::get('/item_maintenance/individual_top', [ItemMaintenanceController::class, 'individual_top'])->name('item_maintenance.individual_top');
@@ -60,4 +63,9 @@ Route::group(['middleware' => 'auth'], function(){
     Route::post('/item_maintenance/individual_modify', [ItemMaintenanceController::class, 'individual_modify'])->name('item_maintenance.individual_modify');
     Route::get('/item_maintenance/search', [ItemMaintenanceController::class, 'item_list_search'])->name('item_maintenance.search');
     Route::get('/item_maintenance/sort/{sort_column}/{direction}', [ItemMaintenanceController::class, 'item_list_sort'])->name('item_maintenance.sort');
+
+    // My記録
+    Route::get('/my_record', [MyRecordController::class, 'top'])->name('myrecord.top');
+    Route::get('/my_record_chart_ajax', [MyRecordController::class, 'chart_ajax']);
+
 });

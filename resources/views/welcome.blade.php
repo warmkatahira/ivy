@@ -30,10 +30,13 @@
             @if (Route::has('login'))
                 <div class="fixed top-0 right-0 px-6 py-4 sm:block">
                     @auth
-                        <a href="{{ url('/dashboard') }}" class="text-sm text-gray-700 dark:text-gray-500 underline">Dashboard</a>
+                        <a href="{{ url('/dashboard') }}" class="text-sm text-gray-700 dark:text-gray-500 underline">ホーム</a>
+                        <form method="POST" action="{{ route('logout') }}" class="inline-block ml-5">
+                            @csrf
+                            <input type="submit" class="text-sm text-gray-700 dark:text-gray-500 underline cursor-pointer" value="ログアウト">
+                        </form>
                     @else
                         <a href="{{ route('login') }}" class="text-sm text-gray-700 dark:text-gray-500 underline">ログイン</a>
-
                         @if (Route::has('register'))
                             <a href="{{ route('register') }}" class="ml-4 text-sm text-gray-700 dark:text-gray-500 underline">ユーザー登録</a>
                         @endif
@@ -44,17 +47,17 @@
                 <div class="container px-5 py-24 mx-auto flex flex-col">
                     <div class="lg:w-4/6 mx-auto">
                         <div class="rounded-lg h-64 overflow-hidden p-16 text-center">
-                            <span class="text-black text-5xl" style="font-family: 'Noto Serif JP';">クラウド棚卸システム</span><br><br>
+                            <span class="text-black text-2xl xl:text-5xl" style="font-family: 'Noto Serif JP';">クラウド棚卸システム</span><br><br>
                             <!-- <span class="text-teal-700 text-6xl" style="font-family: 'Merriweather';">Ivy</span> -->
                             <img src="{{ asset('image/logo.svg') }}" width="100" class="m-auto">
                         </div>
                         <div class="mt-10 p-5 border-t-8 border-teal-700 bg-teal-100" style="font-family: 'Noto Serif JP';">
-                            <p class="my-5 text-4xl text-center">棚卸のみに特化したシンプルなシステム</p>
-                            <p class="mb-4 text-3xl text-sky-400" style="font-family: 'Fugaz One';"><i class="las la-check"></i>Step 01</p>
-                            <p class="ml-7 mb-4 text-2xl">商品と在庫を設定</p>
-                            <p class="mb-4 text-3xl text-sky-400" style="font-family: 'Fugaz One';"><i class="las la-check"></i>Step 02</p>
-                            <p class="ml-7 mb-4 text-2xl">商品をスキャン</p>
-                            <p class="mb-4 text-4xl text-rose-500 text-center">簡単2ステップで棚卸が始められます!</p>
+                            <p class="my-5 text-base xl:text-4xl text-center">棚卸のみに特化したシンプルなシステム</p>
+                            <p class="mb-4 text-base xl:text-3xl text-sky-400" style="font-family: 'Fugaz One';"><i class="las la-check"></i>Step 01</p>
+                            <p class="ml-7 mb-4 text-base xl:text-2xl">商品と在庫を設定</p>
+                            <p class="mb-4 text-base xl:text-3xl text-sky-400" style="font-family: 'Fugaz One';"><i class="las la-check"></i>Step 02</p>
+                            <p class="ml-7 mb-4 text-base xl:text-2xl">商品をスキャン</p>
+                            <p class="mb-4 text-base xl:text-4xl text-rose-500 text-center">簡単2ステップで棚卸が始められます!</p>
                         </div>
                     </div>
                 </div>

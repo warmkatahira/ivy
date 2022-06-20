@@ -3,6 +3,7 @@
 namespace App\Services;
 
 use App\Models\InventoryHistory;
+use App\Consts\PaginateConsts;
 
 class InventoryHistorySearchSortService
 {
@@ -25,7 +26,7 @@ class InventoryHistorySearchSortService
         // CSV出力する情報を格納
         session(['inventory_history_list_export' => InventoryHistory::all()]);
         // ページネーションの設定
-        $inventory_histories = InventoryHistory::paginate(30);
+        $inventory_histories = InventoryHistory::paginate(PaginateConsts::PAGINATE_50);
         return $inventory_histories;
     }
 

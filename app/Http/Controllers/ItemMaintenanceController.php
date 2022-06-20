@@ -17,6 +17,11 @@ class ItemMaintenanceController extends Controller
         return view('item_maintenance.top');
     }
 
+    public function data_import_top()
+    {
+        return view('item_maintenance.data_import_top');
+    }
+
     public function data_import(Request $request)
     {
         // 選択したデータを保存
@@ -35,7 +40,7 @@ class ItemMaintenanceController extends Controller
             //セッションにエラー情報とエラー日時を格納
             session(['validator_errors' => $validator_errors, 'error_date' => new Carbon('now')]);
             session()->flash('alert_danger', count($validator_errors) . "件のエラーがあった為、商品一括取込を中断しました。\n詳細はエラー出力で確認して下さい。");
-            return redirect()->route('item_maintenance.top');
+            return redirect()->route('item_maintenance.data_import_top');
         }
         // 更新 or 追加の処理を行う
         $ItemDataImportService->item_data_import_upsert();
@@ -43,7 +48,7 @@ class ItemMaintenanceController extends Controller
         session()->forget('validator_errors');
         // 完了メッセージを表示
         session()->flash('alert_success', '商品一括取込が完了しました。');
-        return redirect()->route('item_maintenance.top');
+        return redirect()->route('item_maintenance.data_import_top');
     }
 
     public function validator_error_export()

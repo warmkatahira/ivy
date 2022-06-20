@@ -17,6 +17,7 @@ return new class extends Migration
             $table->increments('inventory_id');
             $table->date('inventory_date');
             $table->time('inventory_time');
+            $table->integer('operator_id');
             $table->string('operator_name');
             $table->string('item_code');
             $table->string('individual_jan_code');

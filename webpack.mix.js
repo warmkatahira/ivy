@@ -15,6 +15,7 @@ mix.js('resources/js/app.js', 'public/js')
     .js('resources/js/item_maintenance.js', 'public/js')
     .js('resources/js/inventory.js', 'public/js')
     .js('resources/js/modal.js', 'public/js')
+    .js('resources/js/myrecord.js', 'public/js')
     .autoload({
         jquery: ['$', 'window.jQuery']
     })

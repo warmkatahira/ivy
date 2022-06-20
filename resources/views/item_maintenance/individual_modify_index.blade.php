@@ -2,7 +2,6 @@
 <x-app-layout>
     <x-slot name="header">
         <span class="font-semibold text-lg text-gray-800">
-            <i class="las la-tools la-lg align-middle"></i>
             商品個別メンテナンス変更画面
         </span>
     </x-slot>
@@ -34,7 +33,7 @@
                 <input type="text" id="item_name_2" name="item_name_2" value="{{ old('item_name_2', $item->item_name_2) }}" class="col-span-7 xl:col-span-10" autocomplete="off">
             </div>
             <div class="grid grid-cols-12 gap-4 mb-5 border-b-2 border-gray-400 p-5">
-                <label for="jan_start_position" class="col-span-9 xl:col-span-2 p-2"><i class="las la-pen la-lg"></i>JAN開始位置</label>
+                <label for="jan_start_position" class="col-span-9 xl:col-span-2 p-2"><i class="las la-pen la-lg"></i>JAN開始位置<span class="text-red-500">*</span></label>
                 <input type="text" id="jan_start_position" name="jan_start_position" class="col-span-3 xl:col-span-1" value="{{ old('jan_start_position', $item->jan_start_position) }}" autocomplete="off">
             </div>
             <div class="grid grid-cols-12 gap-4 mb-5 border-b-2 border-gray-400 p-5">

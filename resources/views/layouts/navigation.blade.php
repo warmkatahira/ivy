@@ -17,6 +17,12 @@
                             ホーム
                         </span>
                     </x-nav-link>
+                    <x-nav-link :href="route('myrecord.top')" :active="request()->routeIs('myrecord.top')">
+                        <span class="align-middle text-lg">
+                            <i class="las la-trophy la-lg align-middle"></i>
+                            My記録
+                        </span>
+                    </x-nav-link>
                     <x-nav-link :href="route('inventory.top')" :active="request()->routeIs('inventory.top')">
                         <span class="align-middle text-lg">
                             <i class="las la-tasks la-lg align-middle"></i>
@@ -96,6 +102,12 @@
                     <span class="align-middle text-lg">
                         <i class="las la-home la-lg"></i>
                         ホーム
+                    </span>
+                </x-responsive-nav-link>
+                <x-responsive-nav-link :href="route('myrecord.top')" :active="request()->routeIs('myrecord.top')">
+                    <span class="align-middle text-lg">
+                        <i class="las la-trophy la-lg"></i>
+                        My記録
                     </span>
                 </x-responsive-nav-link>
                 <x-responsive-nav-link :href="route('inventory.top')" :active="request()->routeIs('inventory.top')">

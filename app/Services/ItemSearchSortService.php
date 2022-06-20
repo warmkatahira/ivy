@@ -4,6 +4,7 @@ namespace App\Services;
 
 use App\Models\Item;
 use App\Models\Stock;
+use App\Consts\PaginateConsts;
 
 class ItemSearchSortService
 {
@@ -28,7 +29,7 @@ class ItemSearchSortService
         // 処理後に戻るURLをセッションに格納
         session(['previous_url' => url()->full()]);
         // ページネーションの設定
-        $items = Item::paginate(80);
+        $items = Item::paginate(PaginateConsts::PAGINATE_50);
         return $items;
     }
 

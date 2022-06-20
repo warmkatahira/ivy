@@ -1,15 +1,23 @@
 <x-app-layout>
     <x-slot name="header">
         <span class="font-semibold text-lg text-gray-800">
-            <i class="las la-tools la-lg align-middle"></i>
             メンテナンス
         </span>
     </x-slot>
     <div class="py-2">
         <div class="mx-5">
-            <div class="grid grid-cols-1 xl:grid-cols-2 gap-4">
-                <a href="{{ route('item_maintenance.top') }}" class="rounded-lg bg-teal-200 text-center p-8 transition duration-300 ease-in-out hover:bg-lime-200">
-                    商品メンテナンス
+            <div class="grid grid-cols-12">
+                <!-- 商品メンテナンス -->
+                <a href="{{ route('item_maintenance.top') }}" class="col-span-12 xl:col-span-3 text-center px-2 py-1 uppercase transition-colors duration-200 transform focus:outline-none">
+                    <div class="overflow-hidden bg-white rounded-lg shadow-lg dark:bg-gray-800">
+                        <div class="px-4 py-2 bg-teal-500 text-white text-base xl:text-xl">
+                            商品メンテナンス
+                        </div>
+                        <div class="px-4 py-2">
+                            <p class="mt-1 text-sm text-gray-600 dark:text-gray-400">商品情報を管理します。<br><br></p>
+                        </div>
+                        <img class="object-cover mx-auto" src="{{ asset('image/商品メンテナンス.svg') }}">
+                    </div>
                 </a>
             </div>
         </div>

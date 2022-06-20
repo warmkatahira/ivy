@@ -1,41 +1,42 @@
 <script src="{{ asset('js/modal.js') }}" defer></script>
 <x-app-layout>
     <x-slot name="header">
-        <span class="font-semibold text-lg text-gray-800">
-            <i class="las la-history la-lg"></i>
-            棚卸履歴一覧
-        </span>
-        <a id="openModal" class="cursor-pointer rounded-lg bg-teal-200 text-center p-4 transition duration-300 ease-in-out hover:bg-lime-200 ml-10">
-            <i class="las la-file-download la-lg"></i>CSV出力
-        </a>
+        <div class="grid grid-cols-12">
+            <span class="font-semibold text-lg text-gray-800 col-span-5 py-3">
+                棚卸履歴一覧
+            </span>
+            <a id="openModal" class="col-span-7 xl:col-span-2 col-start-6 xl:col-start-11 cursor-pointer rounded-lg bg-teal-200 text-center p-4 transition duration-300 ease-in-out hover:bg-lime-200 ml-10">
+                <i class="las la-file-download la-lg"></i>CSV出力
+            </a>
+        </div>
     </x-slot>
     <!-- 検索ボックス -->
     <div class="mx-5">
         <form method="get" action="{{ route('inventory_history_list.search') }}" class="m-0">
             <details class="bg-sky-100" {{ $search_mode == 'On' ? 'open' : Null }}>
                 <summary class="font-bold block bg-sky-200 p-3 text-center cursor-pointer">検索オプション<i class="las la-filter la-lg"></i></summary>
-                <div class="mx-5 py-5 grid grid-cols-12 gap-4">
-                    <input type="text" id="search_item_code" class="col-span-12 xl:col-span-3 text-sm" name="search_item_code" value="{{ empty($search_item_code) ? Null : $search_item_code }}" autocomplete="off" placeholder="商品コード">
-                    <input type="text" id="search_individual_jan_code" class="col-span-12 xl:col-span-3 text-sm" name="search_individual_jan_code" value="{{ empty($search_individual_jan_code) ? Null : $search_individual_jan_code }}" autocomplete="off" placeholder="個別JAN">
-                    <input type="text" id="search_item_name_1" class="col-span-12 xl:col-span-3 text-sm" name="search_item_name_1" value="{{ empty($search_item_name_1) ? Null : $search_item_name_1 }}" autocomplete="off" placeholder="商品名1">
-                    <input type="text" id="search_item_name_2" class="col-span-12 xl:col-span-3 text-sm" name="search_item_name_2" value="{{ empty($search_item_name_2) ? Null : $search_item_name_2 }}" autocomplete="off" placeholder="商品名2">
-                    <label class="p-2 col-span-12 xl:col-span-1 text-sm"><i class="las la-calendar-day la-lg"></i>棚卸日</label>
+                <div class="mx-5 py-5 grid grid-cols-12 xl:gap-4">
+                    <p class="p-2 col-span-12 xl:col-span-1 text-sm">商品コード</p>
+                    <input type="text" id="search_item_code" class="col-span-12 xl:col-span-1 text-sm" name="search_item_code" value="{{ empty($search_item_code) ? Null : $search_item_code }}" autocomplete="off" placeholder="商品コード">
+                    <p class="p-2 col-span-12 xl:col-span-1 xl:col-start-4 text-sm">個別JAN</p>
+                    <input type="text" id="search_individual_jan_code" class="col-span-12 xl:col-span-1 text-sm" name="search_individual_jan_code" value="{{ empty($search_individual_jan_code) ? Null : $search_individual_jan_code }}" autocomplete="off" placeholder="個別JAN">
+                    <p class="p-2 col-span-12 xl:col-span-1 xl:col-start-7 text-sm">商品名1</p>
+                    <input type="text" id="search_item_name_1" class="col-span-12 xl:col-span-2 text-sm" name="search_item_name_1" value="{{ empty($search_item_name_1) ? Null : $search_item_name_1 }}" autocomplete="off" placeholder="商品名1">
+                    <p class="p-2 col-span-12 xl:col-span-1 xl:col-start-10 text-sm">商品名2</p>
+                    <input type="text" id="search_item_name_2" class="col-span-12 xl:col-span-2 text-sm" name="search_item_name_2" value="{{ empty($search_item_name_2) ? Null : $search_item_name_2 }}" autocomplete="off" placeholder="商品名2">
+                    <p class="p-2 col-span-12 xl:col-span-1 text-sm">棚卸日</p>
                     <input type="date" id="search_inventory_date_start" class="col-span-12 xl:col-span-2 text-sm" name="search_inventory_date_start" value="{{ empty($search_inventory_date_start) ? Null : $search_inventory_date_start }}" autocomplete="off">
+                    <p class="p-2 col-span-12 xl:col-span-1 text-sm text-center">～</p>
                     <input type="date" id="search_inventory_date_end" class="col-span-12 xl:col-span-2 text-sm" name="search_inventory_date_end" value="{{ empty($search_inventory_date_end) ? Null : $search_inventory_date_end }}" autocomplete="off">    
-                    <button type="submit" class="xl:col-start-11 col-span-6 xl:col-span-1 rounded-lg font-bold bg-pink-200 py-2 text-center transition duration-300 ease-in-out hover:bg-lime-200">
+                    <button type="submit" class="xl:col-start-11 col-span-12 xl:col-span-1 rounded-lg font-bold  bg-gradient-to-r from-purple-200 to-red-200  hover:bg-gradient-to-r hover:from-lime-200 hover:to-green-200 hover:bg-lime-200 mt-5 xl:mt-0 py-2 text-center transition duration-300 ease-in-out">
                         <i class="las la-search la-lg"></i>
                     </button>
-                    <a href="{{ route('inventory_history_list.index') }}" class="xl:col-start-12 col-span-6 xl:col-span-1 inline-block rounded-lg font-bold bg-pink-200 py-2 text-center transition duration-300 ease-in-out hover:bg-lime-200">
+                    <a href="{{ route('inventory_history_list.index') }}" class="xl:col-start-12 col-span-12 xl:col-span-1 inline-block rounded-lg font-bold  bg-gradient-to-r from-purple-200 to-red-200  hover:bg-gradient-to-r hover:from-lime-200 hover:to-green-200 hover:bg-lime-200 mt-5 xl:mt-0 py-2 text-center transition duration-300 ease-in-out">
                         <i class="las la-trash la-lg"></i>
                     </a>
                 </div>
-                <div class="mr-12 pb-5 flex justify-end">
-                    
-                </div>
             </details>
         </form>
-    </div>
-    <div class="mx-5">
          <!-- ページネーション -->
         <div class="my-5">
             {{ $inventory_histories->appends(request()->input())->links() }}
@@ -53,9 +54,9 @@
                         <th class="p-2 px-2"><a href="{{ route('inventory_history_list.sort', ['sort_column' => 'brand_name', 'direction' => ($sort_column != 'brand_name' ? 'desc' : ($direction == 'asc' ? 'desc' : 'asc')) ]) }}">ブランド名</a>{{ strpos(url()->full(), 'sort/brand_name') !== false ? strpos(url()->full(), 'asc') !== false ? '↑' : '↓' : Null }}</th>
                         <th class="p-2 px-2"><a href="{{ route('inventory_history_list.sort', ['sort_column' => 'item_name_1', 'direction' => ($sort_column != 'item_name_1' ? 'desc' : ($direction == 'asc' ? 'desc' : 'asc')) ]) }}">商品名1</a>{{ strpos(url()->full(), 'sort/item_name_1') !== false ? strpos(url()->full(), 'asc') !== false ? '↑' : '↓' : Null }}</th>
                         <th class="p-2 px-2"><a href="{{ route('inventory_history_list.sort', ['sort_column' => 'item_name_2', 'direction' => ($sort_column != 'item_name_2' ? 'desc' : ($direction == 'asc' ? 'desc' : 'asc')) ]) }}">商品名2</a>{{ strpos(url()->full(), 'sort/item_name_2') !== false ? strpos(url()->full(), 'asc') !== false ? '↑' : '↓' : Null }}</th>
-                        <th class="p-2 px-2"><a href="{{ route('inventory_history_list.sort', ['sort_column' => 'inventory_quantity', 'direction' => ($sort_column != 'inventory_quantity' ? 'desc' : ($direction == 'asc' ? 'desc' : 'asc')) ]) }}">棚卸数</a>{{ strpos(url()->full(), 'sort/inventory_quantity') !== false ? strpos(url()->full(), 'asc') !== false ? '↑' : '↓' : Null }}</th>
-                        <th class="p-2 px-2"><a href="{{ route('inventory_history_list.sort', ['sort_column' => 'logical_stock', 'direction' => ($sort_column != 'logical_stock' ? 'desc' : ($direction == 'asc' ? 'desc' : 'asc')) ]) }}">在庫数</a>{{ strpos(url()->full(), 'sort/logical_stock') !== false ? strpos(url()->full(), 'asc') !== false ? '↑' : '↓' : Null }}</th>
-                        <th class="p-2 px-2"><a href="{{ route('inventory_history_list.sort', ['sort_column' => 'inventory_result', 'direction' => ($sort_column != 'inventory_result' ? 'desc' : ($direction == 'asc' ? 'desc' : 'asc')) ]) }}">棚卸結果</a>{{ strpos(url()->full(), 'sort/inventory_result') !== false ? strpos(url()->full(), 'asc') !== false ? '↑' : '↓' : Null }}</th>
+                        <th class="p-2 px-2 text-right"><a href="{{ route('inventory_history_list.sort', ['sort_column' => 'inventory_quantity', 'direction' => ($sort_column != 'inventory_quantity' ? 'desc' : ($direction == 'asc' ? 'desc' : 'asc')) ]) }}">棚卸数</a>{{ strpos(url()->full(), 'sort/inventory_quantity') !== false ? strpos(url()->full(), 'asc') !== false ? '↑' : '↓' : Null }}</th>
+                        <th class="p-2 px-2 text-right"><a href="{{ route('inventory_history_list.sort', ['sort_column' => 'logical_stock', 'direction' => ($sort_column != 'logical_stock' ? 'desc' : ($direction == 'asc' ? 'desc' : 'asc')) ]) }}">在庫数</a>{{ strpos(url()->full(), 'sort/logical_stock') !== false ? strpos(url()->full(), 'asc') !== false ? '↑' : '↓' : Null }}</th>
+                        <th class="p-2 px-2 text-center"><a href="{{ route('inventory_history_list.sort', ['sort_column' => 'inventory_result', 'direction' => ($sort_column != 'inventory_result' ? 'desc' : ($direction == 'asc' ? 'desc' : 'asc')) ]) }}">棚卸結果</a>{{ strpos(url()->full(), 'sort/inventory_result') !== false ? strpos(url()->full(), 'asc') !== false ? '↑' : '↓' : Null }}</th>
                     </tr>
                 </thead>
                 <tbody class="bg-white">

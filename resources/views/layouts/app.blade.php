@@ -20,10 +20,13 @@
         <link rel="stylesheet" href="https://maxst.icons8.com/vue-static/landings/line-awesome/line-awesome/1.3.0/css/line-awesome.min.css">
 
         <!-- Google fonts -->
-        <link href="https://fonts.googleapis.com/css2?family=Fugaz+One&family=Merriweather:ital@1&family=Noto+Sans+JP&family=Noto+Serif+JP&display=swap" rel="stylesheet">
+        <link href="https://fonts.googleapis.com/css2?family=Kdam+Thmor+Pro&family=Noto+Sans+JP&display=swap" rel="stylesheet">
     
         <!-- favicon -->
         <link rel="shortcut icon" type="image/x-icon"  href="{{ asset('image/favicon.ico') }}">
+
+        <!-- Chart.js -->
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.3/Chart.min.js"></script>
     </head>
     <body class="antialiased bg-gray-100" style="font-family: 'Noto Sans JP';">
         <div class="min-h-screen">
@@ -31,7 +34,7 @@
 
             <!-- Page Heading -->
             <header class="bg-white shadow">
-                <div class="mx-5 py-6 px-4 sm:px-6 lg:px-8">
+                <div class="mx-5 py-5 px-4 sm:px-6 lg:px-8">
                     {{ $header }}
                 </div>
             </header>

@@ -89,6 +89,7 @@ class InventoryController extends Controller
         $param = [
             'inventory_date' => $nowDate->format('Y/m/d'),
             'inventory_time' => $nowDate->format('H:i:s'),
+            'operator_id' => Auth::user()->id,
             'operator_name' => Auth::user()->name,
             'item_code' => $item->item_code,
             'individual_jan_code' => $item->individual_jan_code,
@@ -107,5 +108,12 @@ class InventoryController extends Controller
         // 完了メッセージを表示
         session()->flash('alert_success', '棚卸確定を実行しました。');
         return redirect()->route('inventory.top');
+    }
+
+    // 取り消し処理
+    public function inventory_cancel()
+    {
+        // 棚卸画面を再読み込み
+        return back();
     }
 }

@@ -22,7 +22,7 @@ window.document.onkeydown = function(event){
             headers: {
                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
             },    
-            url: '/ivy/inventory/' + scan_info.value,
+            url: '/inventory/' + scan_info.value,
             type: 'GET',
             dataType: 'json',
             success: function(data){
@@ -95,6 +95,17 @@ $("[id=inventory_confirm]").on("click",function(){
         return false;
     }
     var result = window.confirm('棚卸確定を実行しますか？');
+    // 「はい」が押下されたらsubmit、「いいえ」が押下されたら処理キャンセル
+    if(result == true) {
+        form.submit();
+    }else {
+        return false;
+    }
+});
+
+// 取消ボタンが押下されたら、処理の確認を実施
+$("[id=inventory_cancel]").on("click",function(){
+    var result = window.confirm('棚卸取消を実行しますか？');
     // 「はい」が押下されたらsubmit、「いいえ」が押下されたら処理キャンセル
     if(result == true) {
         form.submit();

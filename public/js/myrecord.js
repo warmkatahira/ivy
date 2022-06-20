@@ -10923,173 +10923,62 @@ return jQuery;
 var __webpack_exports__ = {};
 // This entry need to be wrapped in an IIFE because it need to be isolated against other modules in the chunk.
 (() => {
-/*!***********************************!*\
-  !*** ./resources/js/inventory.js ***!
-  \***********************************/
+/*!**********************************!*\
+  !*** ./resources/js/myrecord.js ***!
+  \**********************************/
 /* provided dependency */ var $ = __webpack_require__(/*! jquery */ "./node_modules/jquery/dist/jquery.js");
-var scan_info = document.getElementById("scan_info");
-var logical_stock = document.getElementById("logical_stock");
-var inventory_quantity = document.getElementById("inventory_quantity");
-var message = document.getElementById("message");
-var individual_jan_code = document.getElementById("individual_jan_code");
-var brand_name = document.getElementById("brand_name");
-var item_name_1 = document.getElementById("item_name_1");
-var item_name_2 = document.getElementById("item_name_2");
-var scan_ok_audio = new Audio('audio/scan_ok_audio.mp3');
-var scan_ng_audio = new Audio('audio/scan_ng_audio.mp3');
-var alert_success_div = document.getElementById('alert_success'); // ページの読み込み完了と同時に実行されるよう指定
+var inventory_total_count = document.getElementById('inventory_total_count');
+var inventory_result_ok_count = document.getElementById('inventory_result_ok_count');
+var inventory_result_ng_count = document.getElementById('inventory_result_ng_count');
+var today_inventory_result_ratio = null;
 
-window.onload = scan_set;
+window.onload = function () {
+  $.ajax({
+    headers: {
+      'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+    },
+    url: '/my_record_chart_ajax',
+    type: 'GET',
+    dataType: 'json',
+    success: function success(data) {
+      // 合計件数を取得
+      var all_count = data['inventory_result_ok_count'] + data['inventory_result_ng_count']; // 件数が1件以上あれば情報を表示
 
-window.document.onkeydown = function (event) {
-  // エンターが押下されて、商品スキャンに値がある場合
-  if (event.key === 'Enter' && scan_info.value) {
-    $.ajax({
-      headers: {
-        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-      },
-      url: '/inventory/' + scan_info.value,
-      type: 'GET',
-      dataType: 'json',
-      success: function success(data) {
-        message.innerHTML = ''; // 照合結果がNGの場合
+      if (all_count != 0) {
+        // 件数と割合を表示
+        inventory_total_count.innerHTML = 'TOTAL <i class="las la-caret-right la-lg"></i> ' + all_count.toLocaleString();
+        inventory_result_ok_count.innerHTML = 'OK <i class="las la-caret-right la-lg"></i> ' + data['inventory_result_ok_count'].toLocaleString() + ' (' + Math.round(data['inventory_result_ok_count'] / all_count * 100) + '%)';
+        inventory_result_ng_count.innerHTML = 'NG <i class="las la-caret-right la-lg"></i> ' + data['inventory_result_ng_count'].toLocaleString() + ' (' + Math.round(data['inventory_result_ng_count'] / all_count * 100) + '%)'; // 当日の棚卸結果割合チャートを表示
 
-        if (data['item_searched_flg'] == false) {
-          audio_play('ng'); // エラーメッセージを表示
+        var today_inventory_result_ratio_context = document.querySelector("#today_inventory_result_ratio").getContext('2d'); // 前回のチャートを破棄
 
-          message.innerHTML = error_msg(data['error_msg']);
-        } // 照合結果がOKの場合
-
-
-        if (data['item_searched_flg'] == true) {
-          audio_play('ok'); // 棚卸数を更新
-
-          inventory_quantity.innerHTML = data['inventory_quantity']; // 1商品目のスキャンの場合
-
-          if (data['inventory_quantity'] == 1) {
-            // フラッシュメッセージがある場合のみ削除処理
-            if (alert_success_div !== null) {
-              alert_success_div.remove();
-            } // 在庫数を更新
-
-
-            logical_stock.innerHTML = data['item']['logical_stock']; // 商品情報を更新
-
-            individual_jan_code.innerHTML = data['item']['individual_jan_code'];
-            brand_name.innerHTML = data['item']['brand_name'];
-            item_name_1.innerHTML = data['item']['item_name_1'];
-            item_name_2.innerHTML = data['item']['item_name_2'];
-          }
+        if (today_inventory_result_ratio != null) {
+          today_inventory_result_ratio.destroy();
         }
 
-        scan_set();
-      },
-      error: function error() {
-        audio_play('ng'); // 通信が失敗した場合
-
-        message.innerHTML = error_msg("通信に失敗しました");
-        scan_set();
+        today_inventory_result_ratio = new Chart(today_inventory_result_ratio_context, {
+          type: 'doughnut',
+          data: {
+            labels: ['OK', 'NG'],
+            datasets: [{
+              data: [data['inventory_result_ok_count'], data['inventory_result_ng_count']],
+              backgroundColor: ["rgba(65,105,225,1)", "rgba(219,39,91,0.5)"]
+            }]
+          },
+          options: {
+            responsive: false,
+            title: {
+              display: true
+            }
+          }
+        });
       }
-    });
-  }
-}; // 効果音を再生
-
-
-function audio_play(play_category) {
-  // 効果音を再生し、再生中に次の処理がされた場合にすぐ再生されるように再生位置をリセット
-  if (play_category == 'ok') {
-    scan_ok_audio.play();
-    scan_ok_audio.currentTime = 0;
-  }
-
-  if (play_category == 'ng') {
-    scan_ng_audio.play();
-    scan_ng_audio.currentTime = 0;
-  }
-} // エラーメッセージ表示用
-
-
-function error_msg(error_msg) {
-  return error_msg + "<br><p class='text-red-600'>" + scan_info.value + "</p>";
-} // スキャンエリアをクリアして、フォーカスをセット
-
-
-function scan_set() {
-  scan_info.value = '';
-  scan_info.focus();
-} // 確定ボタンが押下されたら、処理の確認を実施
-
-
-$("[id=inventory_confirm]").on("click", function () {
-  // 棚卸数がない場合、処理を中断
-  if (inventory_quantity.innerHTML == '') {
-    alert('棚卸を行ってから確定をして下さい。');
-    return false;
-  }
-
-  var result = window.confirm('棚卸確定を実行しますか？'); // 「はい」が押下されたらsubmit、「いいえ」が押下されたら処理キャンセル
-
-  if (result == true) {
-    form.submit();
-  } else {
-    return false;
-  }
-}); // 取消ボタンが押下されたら、処理の確認を実施
-
-$("[id=inventory_cancel]").on("click", function () {
-  var result = window.confirm('棚卸取消を実行しますか？'); // 「はい」が押下されたらsubmit、「いいえ」が押下されたら処理キャンセル
-
-  if (result == true) {
-    form.submit();
-  } else {
-    return false;
-  }
-});
-$(function () {// フォーカスが入って抜けた時に発火
-
-  /* $(scan_info).on("blur",function(){
-      // 値がある場合のみ処理を実行
-      if(scan_info.value){
-          $.ajax({
-              headers: {
-                  'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-              },    
-              url: '/inventory/' + scan_info.value,
-              type: 'GET',
-              dataType: 'json',
-              success: function(data){
-                  message.innerHTML = '';
-                  // 照合結果がNGの場合
-                  if(data['item_searched_flg'] == false){
-                      // エラーメッセージを表示
-                      message.innerHTML = error_msg(data['error_msg']);
-                  }
-                  // 照合結果がOKの場合
-                  if(data['item_searched_flg'] == true){
-                      // 棚卸数を更新
-                      inventory_quantity.innerHTML = data['inventory_quantity'];
-                      // 1商品目のスキャンの場合
-                      if (data['inventory_quantity'] == 1){
-                          // 在庫数を更新
-                          logical_stock.innerHTML = data['item']['logical_stock'];
-                          // 商品情報を更新
-                          individual_jan_code.innerHTML = data['item']['individual_jan_code'];
-                          brand_name.innerHTML = data['item']['brand_name'];
-                          item_name_1.innerHTML = data['item']['item_name_1'];
-                          item_name_2.innerHTML = data['item']['item_name_2'];
-                      }
-                  }
-                  scan_set();
-              },
-              error: function(){
-                  // 通信が失敗した場合
-                  message.innerHTML = error_msg("通信に失敗しました");
-                  scan_set();
-              }
-          });
-      }
-  }); */
-});
+    },
+    error: function error() {
+      alert('失敗');
+    }
+  });
+};
 })();
 
 /******/ })()

@@ -1,33 +1,37 @@
-<script src="{{ asset('js/item_maintenance.js') }}" defer></script>
 <x-app-layout>
     <x-slot name="header">
         <span class="font-semibold text-lg text-gray-800">
-            <i class="las la-tools la-lg align-middle"></i>
             商品メンテナンス
         </span>
     </x-slot>
     <div class="py-2">
         <div class="mx-5">
-            <div class="grid grid-cols-1 xl:grid-cols-2 gap-4">
-                <a href="{{ route('item_maintenance.individual_top') }}" class="rounded-lg bg-teal-200 text-center p-8 transition duration-300 ease-in-out hover:bg-lime-200">
-                    個別メンテナンス
+            <div class="grid grid-cols-12">
+                <!-- 個別メンテナンス -->
+                <a href="{{ route('item_maintenance.individual_top') }}" class="col-span-12 xl:col-span-3 text-center px-2 py-1 uppercase transition-colors duration-200 transform focus:outline-none">
+                    <div class="overflow-hidden bg-white rounded-lg shadow-lg dark:bg-gray-800">
+                        <div class="px-4 py-2 bg-teal-500 text-white text-base xl:text-xl">
+                            個別メンテナンス
+                        </div>
+                        <div class="px-4 py-2">
+                            <p class="mt-1 text-sm text-gray-600 dark:text-gray-400">商品を個別に更新します。<br><br></p>
+                        </div>
+                        <img class="object-cover mx-auto" src="{{ asset('image/個別メンテナンス.svg') }}">
+                    </div>
                 </a>
-                <form method="post" action="{{ route('item_maintenance.data_import') }}" id="item_data_import_form" enctype="multipart/form-data" class="m-0">
-                    @csrf
-                    <label for="item_data_import" class="cursor-pointer block rounded-lg bg-teal-200 text-center p-8 transition duration-300 ease-in-out hover:bg-lime-200">
-                        商品一括取込
-                        <input type="file" id="item_data_import" name="item_data_import" accept=".csv" class="hidden">
-                    </label>
-                    <input type="submit" class="hidden">
-                </form>
+                <!-- 商品一括取込 -->
+                <a href="{{ route('item_maintenance.data_import_top') }}" class="col-span-12 xl:col-span-3 text-center px-2 py-1 uppercase transition-colors duration-200 transform focus:outline-none">
+                    <div class="overflow-hidden bg-white rounded-lg shadow-lg dark:bg-gray-800">
+                        <div class="px-4 py-2 bg-teal-500 text-white text-base xl:text-xl">
+                            商品一括取込
+                        </div>
+                        <div class="px-4 py-2">
+                            <p class="mt-1 text-sm text-gray-600 dark:text-gray-400">CSVを取り込み、商品を更新します。<br><br></p>
+                        </div>
+                        <img class="object-cover mx-auto" src="{{ asset('image/商品一括取込.svg') }}">
+                    </div>
+                </a>
             </div>
-            <!-- 新規マスタ一括取込のバリデーションエラーがあればボタンを表示 -->
-            @if(session('validator_errors'))
-                <a href="{{ route('item_maintenance.validator_error_export') }}" class="mt-5 block rounded-lg bg-red-600 text-white text-center p-8 transition duration-300 ease-in-out hover:bg-lime-200 hover:text-black">
-                    <i class="las la-file-download la-2x"></i>新規マスタ一括取込エラー出力
-                    <p>エラー日時：{{ session('error_date') }}</p>
-                </a>
-            @endif
         </div>
     </div>
 </x-app-layout>
