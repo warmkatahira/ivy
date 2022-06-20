@@ -8,7 +8,7 @@ window.onload = function () {
         headers: {
             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
         },    
-        url: '/my_record_chart_ajax',
+        url: '/ivy/my_record_chart_ajax',
         type: 'GET',
         dataType: 'json',
         success: function(data){
