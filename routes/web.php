@@ -37,6 +37,7 @@ Route::group(['middleware' => 'auth'], function(){
     Route::get('/inventory/{iten_info}', [InventoryController::class, 'ajax_process'])->name('inventory.ajax_process');
     Route::get('/inventory_confirm', [InventoryController::class, 'inventory_confirm'])->name('inventory.confirm');
     Route::get('/inventory_cancel', [InventoryController::class, 'inventory_cancel'])->name('inventory.cancel');
+    Route::get('/inventory_modify/{modify_quantity}', [InventoryController::class, 'inventory_modify'])->name('inventory.modify');
 
 
     // データ

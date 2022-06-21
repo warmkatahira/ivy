@@ -17,6 +17,7 @@ class InventoryHistorySearchSortService
              'search_item_name_2', 
              'search_inventory_date_start', 
              'search_inventory_date_end', 
+             'search_inventory_result',
              'sort_column', 
              'direction'
             ]
@@ -39,6 +40,7 @@ class InventoryHistorySearchSortService
         session(['search_item_name_2' => $request->search_item_name_2]);
         session(['search_inventory_date_start' => $request->search_inventory_date_start]);
         session(['search_inventory_date_end' => $request->search_inventory_date_end]);
+        session(['search_inventory_result' => $request->search_inventory_result]);
         // 検索モードを「On」に設定（検索中であることを分かるようにしている）
         session(['search_mode' => 'On']);
         // 検索+ソート処理を実施
@@ -59,7 +61,7 @@ class InventoryHistorySearchSortService
     public function search_and_sort_process()
     {
         // 検索処理
-        $query = $this->search_process(session('search_item_code'), session('search_individual_jan_code'), session('search_item_name_1'), session('search_item_name_2'), session('search_inventory_date_start'), session('search_inventory_date_end'));
+        $query = $this->search_process(session('search_item_code'), session('search_individual_jan_code'), session('search_item_name_1'), session('search_item_name_2'), session('search_inventory_date_start'), session('search_inventory_date_end'), session('search_inventory_result'));
         // ソート処理
         $query = $this->sort_process($query, session('sort_column'), session('direction'));
         // CSV出力する情報を格納
@@ -69,7 +71,7 @@ class InventoryHistorySearchSortService
         return $query;
     }
 
-    public function search_process($search_item_code, $search_individual_jan_code, $search_item_name_1, $search_item_name_2, $search_inventory_date_start, $search_inventory_date_end)
+    public function search_process($search_item_code, $search_individual_jan_code, $search_item_name_1, $search_item_name_2, $search_inventory_date_start, $search_inventory_date_end, $search_inventory_result)
     {
         // 検索ワードがあれば、検索条件を追加
         $query = InventoryHistory::query();
@@ -85,6 +87,9 @@ class InventoryHistorySearchSortService
         if (isset($search_item_name_2)) {
             $query->where('item_name_2', 'like', '%' . $search_item_name_2 . '%');
         }
+        if (isset($search_inventory_result)) {
+            $query->where('inventory_result', 'like', '%' . $search_inventory_result . '%');
+        }
         if (isset($search_inventory_date_start) || isset($search_inventory_date_end)) {
             // 開始日だけの場合
             if (isset($search_inventory_date_start) && !isset($search_inventory_date_end)) {
@@ -99,6 +104,7 @@ class InventoryHistorySearchSortService
                 $query->whereBetween('inventory_date', [$search_inventory_date_start, $search_inventory_date_end]);
             }
         }
+        
         return $query;
     }
 

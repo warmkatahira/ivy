@@ -28,6 +28,8 @@
                     <input type="date" id="search_inventory_date_start" class="col-span-12 xl:col-span-2 text-sm" name="search_inventory_date_start" value="{{ empty($search_inventory_date_start) ? Null : $search_inventory_date_start }}" autocomplete="off">
                     <p class="p-2 col-span-12 xl:col-span-1 text-sm text-center">～</p>
                     <input type="date" id="search_inventory_date_end" class="col-span-12 xl:col-span-2 text-sm" name="search_inventory_date_end" value="{{ empty($search_inventory_date_end) ? Null : $search_inventory_date_end }}" autocomplete="off">    
+                    <p class="p-2 col-span-12 xl:col-span-1 xl:col-start-7 text-sm">棚卸結果</p>
+                    <input type="text" id="search_inventory_result" class="col-span-12 xl:col-span-1 text-sm" name="search_inventory_result" value="{{ empty($search_inventory_result) ? Null : $search_inventory_result }}" autocomplete="off" placeholder="棚卸結果">
                     <button type="submit" class="xl:col-start-11 col-span-12 xl:col-span-1 rounded-lg font-bold  bg-gradient-to-r from-purple-200 to-red-200  hover:bg-gradient-to-r hover:from-lime-200 hover:to-green-200 hover:bg-lime-200 mt-5 xl:mt-0 py-2 text-center transition duration-300 ease-in-out">
                         <i class="las la-search la-lg"></i>
                     </button>

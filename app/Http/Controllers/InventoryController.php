@@ -58,6 +58,7 @@ class InventoryController extends Controller
         if($item_searched_flg){
             // itemsテーブルから情報を取得
             $item = Item::where('item_code', $item_code)->first();
+            session(['item' => $item]);
             // セッションが空でなければ2つ目以降の商品なので、商品コードがセッションの中の情報と一致するか確認
             if(session()->has('inventory_item_code')){
                 // 商品コードが一致した場合
@@ -73,10 +74,17 @@ class InventoryController extends Controller
             // セッションが空の場合、1つ目の商品なので情報を格納
             if(!session()->has('inventory_item_code')){
                 session(['inventory_item_code' => $item_code, 'inventory_quantity' => 1]);
+                // 今日の日付を取得
+                $today = Carbon::today();
+                // 累計棚卸数を取得
+                $today_inventory_quantity = InventoryHistory::where('item_code', $item_code)
+                                            ->whereDate('created_at', $today)
+                                            ->sum('inventory_quantity');
+                session(['today_inventory_quantity' => $today_inventory_quantity]);
             }
         }
         // 結果を返す
-        return response()->json(['inventory_quantity' => session('inventory_quantity'), 'item' => $item, 'item_searched_flg' => $item_searched_flg, 'error_msg' => $error_msg]);
+        return response()->json(['inventory_quantity' => session('inventory_quantity'), 'item' => session('item'), 'item_searched_flg' => $item_searched_flg, 'error_msg' => $error_msg, 'today_inventory_quantity' => session('today_inventory_quantity')]);
     }
 
     // 棚卸確定
@@ -115,5 +123,14 @@ class InventoryController extends Controller
     {
         // 棚卸画面を再読み込み
         return back();
+    }
+
+    // 訂正処理
+    public function inventory_modify($modify_quantity)
+    {
+        // セッションの中身を訂正数に変更
+        session(['inventory_quantity' => $modify_quantity]);
+       // 結果を返す
+       return response()->json(['inventory_quantity' => session('inventory_quantity'), 'item' => session('item')]);
     }
 }
