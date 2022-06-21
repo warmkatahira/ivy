@@ -10962,7 +10962,8 @@ window.onload = function () {
             labels: ['OK', 'NG'],
             datasets: [{
               data: [data['inventory_result_ok_count'], data['inventory_result_ng_count']],
-              backgroundColor: ["rgba(37,99,235,1)", "rgba(220,38,38,1)"]
+              backgroundColor: ["rgba(37,99,235,1)", "rgba(220,38,38,1)"],
+              borderColor: ["rgba(71,85,105,1)", "rgba(71,85,105,1)"]
             }]
           },
           options: {
