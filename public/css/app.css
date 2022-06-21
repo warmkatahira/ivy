@@ -683,11 +683,11 @@ select {
 .col-span-12 {
   grid-column: span 12 / span 12;
 }
-.col-span-4 {
-  grid-column: span 4 / span 4;
-}
 .col-span-8 {
   grid-column: span 8 / span 8;
+}
+.col-span-4 {
+  grid-column: span 4 / span 4;
 }
 .col-start-6 {
   grid-column-start: 6;
@@ -1336,13 +1336,13 @@ select {
   font-size: 2.25rem;
   line-height: 2.5rem;
 }
-.text-xl {
-  font-size: 1.25rem;
-  line-height: 1.75rem;
-}
 .text-3xl {
   font-size: 1.875rem;
   line-height: 2.25rem;
+}
+.text-xl {
+  font-size: 1.25rem;
+  line-height: 1.75rem;
 }
 .text-6xl {
   font-size: 3.75rem;
@@ -1414,6 +1414,10 @@ select {
 .text-white {
   --tw-text-opacity: 1;
   color: rgb(255 255 255 / var(--tw-text-opacity));
+}
+.text-blue-600 {
+  --tw-text-opacity: 1;
+  color: rgb(37 99 235 / var(--tw-text-opacity));
 }
 .text-teal-700 {
   --tw-text-opacity: 1;
@@ -1807,6 +1811,10 @@ select {
     grid-column: span 6 / span 6;
   }
 
+  .xl\:col-span-4 {
+    grid-column: span 4 / span 4;
+  }
+
   .xl\:col-span-3 {
     grid-column: span 3 / span 3;
   }
@@ -1821,10 +1829,6 @@ select {
 
   .xl\:col-span-11 {
     grid-column: span 11 / span 11;
-  }
-
-  .xl\:col-span-4 {
-    grid-column: span 4 / span 4;
   }
 
   .xl\:col-start-5 {

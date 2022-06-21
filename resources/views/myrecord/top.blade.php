@@ -44,9 +44,9 @@
                 <div class="mt-5 col-span-12 xl:col-span-6 xl:col-start-4 border-2 border-black  rounded-lg bg-gradient-to-r from-teal-100 to-sky-100">
                     <p class="text-2xl font-bold text-center pt-3">棚卸結果割合チャート</p>
                     <div class="grid grid-cols-12 pt-3 text-sm xl:text-base" style="font-family:Kdam Thmor Pro;">
-                        <p id="inventory_total_count" class="col-span-4 text-xl text-center"></p>
-                        <p id="inventory_result_ok_count" class="col-span-4 text-xl text-center"></p>
-                        <p id="inventory_result_ng_count" class="col-span-4 text-xl text-center"></p>
+                        <p id="inventory_total_count" class="col-span-12 xl:col-span-4 text-center text-sm xl:text-xl"></p>
+                        <p id="inventory_result_ok_count" class="col-span-6 xl:col-span-4 text-center text-sm xl:text-xl text-blue-600"></p>
+                        <p id="inventory_result_ng_count" class="col-span-6 xl:col-span-4 text-center text-sm xl:text-xl text-red-600"></p>
                     </div>
                     <canvas id="today_inventory_result_ratio" class="min-w-full pb-3"></canvas>
                 </div>

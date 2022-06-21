@@ -32,7 +32,7 @@ window.onload = function () {
                         labels: ['OK', 'NG'],
                         datasets: [{
                             data: [data['inventory_result_ok_count'], data['inventory_result_ng_count']],
-                            backgroundColor: ["rgba(65,105,225,1)", "rgba(219,39,91,0.5)"]
+                            backgroundColor: ["rgba(37,99,235,1)", "rgba(220,38,38,1)"]
                         }],
                     },
                     options: {
