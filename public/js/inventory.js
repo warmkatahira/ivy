@@ -10980,13 +10980,13 @@ window.document.onkeydown = function (event) {
             individual_jan_code.innerHTML = data['item']['individual_jan_code'];
             brand_name.innerHTML = data['item']['brand_name'];
             item_name_1.innerHTML = data['item']['item_name_1'];
-            item_name_2.innerHTML = data['item']['item_name_2']; // 当日の累計棚卸数を表示
-
-            today_inventory_quantity.innerHTML = data['today_inventory_quantity'];
+            item_name_2.innerHTML = data['item']['item_name_2'];
           } // 棚卸差分を更新
 
 
-          inventory_quantity_difference.innerHTML = data['inventory_quantity'] - data['item']['logical_stock'];
+          inventory_quantity_difference.innerHTML = Number(data['today_inventory_quantity']) + Number(data['inventory_quantity']) - Number(data['item']['logical_stock']); // 当日の累計棚卸数を表示
+
+          today_inventory_quantity.innerHTML = Number(data['today_inventory_quantity']) + Number(data['inventory_quantity']);
         }
 
         scan_set();
@@ -11061,14 +11061,14 @@ $("[id=inventory_modify]").on("click", function () {
     return false;
   }
 
-  var modify_quantity = prompt('訂正後の棚卸数を入力して下さい。'); // 値がnullだったら、ここで処理を終了
+  var modify_quantity = prompt('訂正数を入力して下さい。（減らす場合はマイナスを付けて下さい。）'); // 値がnullだったら、ここで処理を終了
 
   if (modify_quantity === null || modify_quantity == '') {
     return false;
-  } // 値が数値でないか、1よりも小さい場合はここで処理を終了
+  } // 値が数値でないか、値が0の場合はここで処理を終了
 
 
-  if (isNaN(modify_quantity) || modify_quantity < 1) {
+  if (isNaN(modify_quantity) || modify_quantity == 0) {
     alert('入力した値が正しくありません。');
     return false;
   } // 
@@ -11082,10 +11082,18 @@ $("[id=inventory_modify]").on("click", function () {
     type: 'GET',
     dataType: 'json',
     success: function success(data) {
-      // 棚卸数を入力された値に変更
+      if (data['modify_ng'] == '1') {
+        alert('訂正後の棚卸数がマイナスになる為、訂正は実施できません。');
+        scan_set();
+        return false;
+      } // 棚卸数を訂正後の値に変更
+
+
       inventory_quantity.innerHTML = data['inventory_quantity']; // 棚卸差分を更新
 
-      inventory_quantity_difference.innerHTML = data['inventory_quantity'] - data['item']['logical_stock'];
+      inventory_quantity_difference.innerHTML = Number(data['today_inventory_quantity']) + Number(data['inventory_quantity']) - Number(data['item']['logical_stock']); // 当日の累計棚卸数を表示
+
+      today_inventory_quantity.innerHTML = Number(data['today_inventory_quantity']) + Number(data['inventory_quantity']);
       scan_set();
     },
     error: function error() {

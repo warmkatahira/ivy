@@ -128,9 +128,14 @@ class InventoryController extends Controller
     // 訂正処理
     public function inventory_modify($modify_quantity)
     {
-        // セッションの中身を訂正数に変更
-        session(['inventory_quantity' => $modify_quantity]);
-       // 結果を返す
-       return response()->json(['inventory_quantity' => session('inventory_quantity'), 'item' => session('item')]);
+        // 訂正後の棚卸数がマイナスにならないか確認
+        if(session('inventory_quantity') + (int)$modify_quantity < 0){
+            return response()->json(['modify_ng' => '1']);
+        }
+
+        // セッションの中身を訂正後の数量に変更
+        session(['inventory_quantity' => session('inventory_quantity') + (int)$modify_quantity]);
+        // 結果を返す
+        return response()->json(['inventory_quantity' => session('inventory_quantity'), 'item' => session('item'), 'today_inventory_quantity' => session('today_inventory_quantity')]);
     }
 }
