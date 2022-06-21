@@ -1,8 +1,10 @@
 <x-app-layout>
     <x-slot name="header">
-        <span class="font-semibold text-lg text-gray-800">
-            商品メンテナンス
-        </span>
+        <div class="grid grid-cols-12">
+            <span class="font-semibold text-lg text-gray-800 col-span-8 py-3">
+                商品メンテナンス
+            </span>
+        </div>
     </x-slot>
     <div class="py-2">
         <div class="mx-5">
