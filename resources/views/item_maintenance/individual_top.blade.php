@@ -31,7 +31,7 @@
                 </div>
             </details>
         </form>
-         <!-- ページネーション -->
+        <!-- ページネーション -->
         <div class="my-5">
             {{ $items->appends(request()->input())->links() }}
         </div>

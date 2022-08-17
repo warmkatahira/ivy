@@ -21,15 +21,15 @@
             <p class="xl:hidden col-span-5">在庫数</p>
             <p class="xl:hidden col-start-8 col-span-5">棚卸数</p>
             <label for="logical_stock" class="pb-2 xl:pb-0 text-base xl:text-xl col-span-12 xl:col-span-1 hidden xl:block text-right">在庫数</label>
-            <div id="logical_stock" class="bg-pink-200 xl:h-40 text-base xl:text-7xl text-center h-8 py-1 xl:p-10 col-span-5 xl:col-span-2"></div>
+            <div id="logical_stock" class="rounded-lg bg-pink-200 xl:h-40 text-base xl:text-7xl text-center h-8 py-1 xl:p-10 col-span-5 xl:col-span-2"></div>
             <label for="inventory_quantity" class="py-2 xl:py-0 text-base xl:text-xl col-span-12 xl:col-span-1 hidden xl:block text-right">棚卸数</label>
-            <div id="inventory_quantity" class="bg-orange-200 xl:h-40 text-base xl:text-7xl text-center h-8 py-1 xl:p-10 col-span-5 xl:col-span-2 col-start-8 xl:col-start-5"></div>
+            <div id="inventory_quantity" class="rounded-lg bg-orange-200 xl:h-40 text-base xl:text-7xl text-center h-8 py-1 xl:p-10 col-span-5 xl:col-span-2 col-start-8 xl:col-start-5"></div>
             <p class="xl:hidden col-span-5">当日累計棚卸数</p>
             <p class="xl:hidden col-start-8 col-span-5">棚卸差分</p>
             <label for="today_inventory_quantity" class="py-2 xl:py-0 text-base xl:text-xl col-span-12 xl:col-span-1 hidden xl:block text-right">当日累計<br>棚卸数</label>
-            <div id="today_inventory_quantity" class="bg-emerald-300 xl:h-40 text-base xl:text-7xl text-center h-8 py-1 xl:p-10 col-span-5 xl:col-span-2"></div>
+            <div id="today_inventory_quantity" class="rounded-lg bg-emerald-300 xl:h-40 text-base xl:text-7xl text-center h-8 py-1 xl:p-10 col-span-5 xl:col-span-2"></div>
             <label for="inventory_quantity_difference" class="py-2 xl:py-0 text-base xl:text-xl col-span-12 xl:col-span-1 hidden xl:block text-right">棚卸差分</label>
-            <div id="inventory_quantity_difference" class="text-white bg-red-500 xl:h-40 text-base xl:text-7xl text-center h-8 py-1 xl:p-10 col-span-5 xl:col-span-2 col-start-8 xl:col-start-11"></div>
+            <div id="inventory_quantity_difference" class="rounded-lg text-white bg-red-500 xl:h-40 text-base xl:text-7xl text-center h-8 py-1 xl:p-10 col-span-5 xl:col-span-2 col-start-8 xl:col-start-11"></div>
             {{-- <label for="message" class="py-2 xl:py-0 text-base xl:text-base col-span-12 xl:col-span-1"><i class="las la-comment la-lg"></i>メッセージ</label>
             <div id="message" class="bg-sky-200 h-20 xl:h-40 text-base xl:text-2xl text-align-top col-span-12 xl:col-span-5 break-words"></div> --}}
         </div>

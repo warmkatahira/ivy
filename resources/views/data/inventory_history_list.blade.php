@@ -30,6 +30,11 @@
                     <input type="date" id="search_inventory_date_end" class="col-span-12 xl:col-span-2 text-sm" name="search_inventory_date_end" value="{{ empty($search_inventory_date_end) ? Null : $search_inventory_date_end }}" autocomplete="off">    
                     <p class="p-2 col-span-12 xl:col-span-1 xl:col-start-7 text-sm">棚卸結果</p>
                     <input type="text" id="search_inventory_result" class="col-span-12 xl:col-span-1 text-sm" name="search_inventory_result" value="{{ empty($search_inventory_result) ? Null : $search_inventory_result }}" autocomplete="off" placeholder="棚卸結果">
+                    <p class="p-2 col-span-12 xl:col-span-1 text-sm">表示単位</p>
+                    <select id="search_disp" name="search_disp" class="col-span-12 xl:col-span-1 text-sm">
+                        <option value="処理" {{ session('search_disp') == '処理' ? 'selected' : '' }}>処理</option>
+                        <option value="日付" {{ session('search_disp') == '日付' ? 'selected' : '' }}>日付</option>
+                    </select>
                     <button type="submit" class="xl:col-start-11 col-span-12 xl:col-span-1 rounded-lg font-bold  bg-gradient-to-r from-purple-200 to-red-200  hover:bg-gradient-to-r hover:from-lime-200 hover:to-green-200 hover:bg-lime-200 mt-5 xl:mt-0 py-2 text-center transition duration-300 ease-in-out">
                         <i class="las la-search la-lg"></i>
                     </button>
@@ -49,7 +54,9 @@
                 <thead>
                     <tr class="text-left bg-teal-200 border-gray-600 sticky top-0 whitespace-nowrap">
                         <th class="p-2 px-2"><a href="{{ route('inventory_history_list.sort', ['sort_column' => 'inventory_date', 'direction' => ($sort_column != 'inventory_date' ? 'desc' : ($direction == 'asc' ? 'desc' : 'asc')) ]) }}">棚卸日</a>{{ strpos(url()->full(), 'sort/inventory_date') !== false ? strpos(url()->full(), 'asc') !== false ? '↑' : '↓' : Null }}</th>
-                        <th class="p-2 px-2"><a href="{{ route('inventory_history_list.sort', ['sort_column' => 'inventory_time', 'direction' => ($sort_column != 'inventory_time' ? 'desc' : ($direction == 'asc' ? 'desc' : 'asc')) ]) }}">棚卸時間</a>{{ strpos(url()->full(), 'sort/inventory_time') !== false ? strpos(url()->full(), 'asc') !== false ? '↑' : '↓' : Null }}</th>
+                        @if(session('search_disp') == '処理')
+                            <th class="p-2 px-2"><a href="{{ route('inventory_history_list.sort', ['sort_column' => 'inventory_time', 'direction' => ($sort_column != 'inventory_time' ? 'desc' : ($direction == 'asc' ? 'desc' : 'asc')) ]) }}">棚卸時間</a>{{ strpos(url()->full(), 'sort/inventory_time') !== false ? strpos(url()->full(), 'asc') !== false ? '↑' : '↓' : Null }}</th>
+                        @endif
                         <th class="p-2 px-2"><a href="{{ route('inventory_history_list.sort', ['sort_column' => 'operator_name', 'direction' => ($sort_column != 'operator_name' ? 'desc' : ($direction == 'asc' ? 'desc' : 'asc')) ]) }}">実施者</a>{{ strpos(url()->full(), 'sort/operator_name') !== false ? strpos(url()->full(), 'asc') !== false ? '↑' : '↓' : Null }}</th>
                         <th class="p-2 px-2"><a href="{{ route('inventory_history_list.sort', ['sort_column' => 'item_code', 'direction' => ($sort_column != 'item_code' ? 'desc' : ($direction == 'asc' ? 'desc' : 'asc')) ]) }}">商品コード</a>{{ strpos(url()->full(), 'sort/item_code') !== false ? strpos(url()->full(), 'asc') !== false ? '↑' : '↓' : Null }}</th>
                         <th class="p-2 px-2"><a href="{{ route('inventory_history_list.sort', ['sort_column' => 'individual_jan_code', 'direction' => ($sort_column != 'individual_jan_code' ? 'desc' : ($direction == 'asc' ? 'desc' : 'asc')) ]) }}">個別JAN</a>{{ strpos(url()->full(), 'sort/individual_jan_code') !== false ? strpos(url()->full(), 'asc') !== false ? '↑' : '↓' : Null }}</th>
@@ -65,7 +72,9 @@
                     @foreach($inventory_histories as $inventory_history)
                         <tr id="tr_{{ $inventory_history->item_code }}" class="whitespace-nowrap">
                             <td class="p-1 px-2 border">{{ $inventory_history->inventory_date }}</td>
-                            <td class="p-1 px-2 border">{{ $inventory_history->inventory_time }}</td>
+                            @if(session('search_disp') == '処理')
+                                <td class="p-1 px-2 border">{{ $inventory_history->inventory_time }}</td>
+                            @endif
                             <td class="p-1 px-2 border">{{ $inventory_history->operator_name }}</td>
                             <td class="p-1 px-2 border">{{ $inventory_history->item_code }}</td>
                             <td class="p-1 px-2 border">{{ $inventory_history->individual_jan_code }}</td>

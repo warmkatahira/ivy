@@ -13,7 +13,7 @@ class InventoryController extends Controller
     public function top()
     {
         // セッションの中身を削除
-        session()->forget(['inventory_item_code', 'inventory_quantity']);
+        session()->forget(['inventory_item_code', 'inventory_quantity', 'difference_item_code']);
         return view('inventory.top');
     }
 
@@ -21,6 +21,7 @@ class InventoryController extends Controller
     {
         // 変数を初期化
         $item_searched_flg = false;
+        $item_difference_flg = false;
         $item = '';
         $logical_stock ='';
         $error_msg = '商品マスタに存在しない商品です';
@@ -55,7 +56,7 @@ class InventoryController extends Controller
             }
         }
         // 商品が検索できていたら情報を取得
-        if($item_searched_flg){
+        if($item_searched_flg == true){
             // itemsテーブルから情報を取得
             $item = Item::where('item_code', $item_code)->first();
             session(['item' => $item]);
@@ -67,8 +68,8 @@ class InventoryController extends Controller
                 }
                 // 商品コードが不一致の場合
                 if(session('inventory_item_code') != $item_code){
-                    $item_searched_flg = false;
-                    $error_msg = '棚卸中ではない商品がスキャンされました';
+                    session(['difference_item_code' => $item_code]);
+                    $item_difference_flg = true;
                 }
             }
             // セッションが空の場合、1つ目の商品なので情報を格納
@@ -84,7 +85,42 @@ class InventoryController extends Controller
             }
         }
         // 結果を返す
-        return response()->json(['inventory_quantity' => session('inventory_quantity'), 'item' => session('item'), 'item_searched_flg' => $item_searched_flg, 'error_msg' => $error_msg, 'today_inventory_quantity' => session('today_inventory_quantity')]);
+        return response()->json([
+            'inventory_quantity' => session('inventory_quantity'),
+            'item' => session('item'),
+            'item_searched_flg' => $item_searched_flg,
+            'error_msg' => $error_msg,
+            'today_inventory_quantity' => session('today_inventory_quantity'),
+            'item_difference_flg' => $item_difference_flg,
+        ]);
+    }
+
+    // 対象外の商品の棚卸確定を実施する
+    public function inventory_difference_confirm_ajax()
+    {
+        // 商品情報を取得
+        $item = Item::where('item_code', session('difference_item_code'))->first();
+        // 棚卸履歴を追加
+        $nowDate = new Carbon('now');
+        $param = [
+            'inventory_date' => $nowDate->format('Y/m/d'),
+            'inventory_time' => $nowDate->format('H:i:s'),
+            'operator_id' => Auth::user()->id,
+            'operator_name' => Auth::user()->name,
+            'item_code' => $item->item_code,
+            'individual_jan_code' => $item->individual_jan_code,
+            'brand_name' => $item->brand_name,
+            'item_name_1' => $item->item_name_1,
+            'item_name_2' => $item->item_name_2,
+            'inventory_quantity' => 1,
+            'logical_stock' => $item->logical_stock,
+            'inventory_result' => 1 == $item->logical_stock ? 'OK' : 'NG',
+            'created_at' => $nowDate,
+            'updated_at' => $nowDate,
+        ];
+        InventoryHistory::insert($param);
+        // 結果を返す
+        return response()->json();
     }
 
     // 棚卸確定
@@ -112,7 +148,7 @@ class InventoryController extends Controller
         ];
         InventoryHistory::insert($param);
         // セッションの中身を削除
-        session()->forget(['inventory_item_code', 'inventory_quantity']);
+        session()->forget(['inventory_item_code', 'inventory_quantity', 'difference_item_code']);
         // 完了メッセージを表示
         session()->flash('alert_success', '棚卸確定を実行しました。');
         return redirect()->route('inventory.top');

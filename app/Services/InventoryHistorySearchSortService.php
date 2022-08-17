@@ -4,6 +4,7 @@ namespace App\Services;
 
 use App\Models\InventoryHistory;
 use App\Consts\PaginateConsts;
+use Illuminate\Support\Facades\DB;
 
 class InventoryHistorySearchSortService
 {
@@ -18,6 +19,7 @@ class InventoryHistorySearchSortService
              'search_inventory_date_start', 
              'search_inventory_date_end', 
              'search_inventory_result',
+             'search_disp',
              'sort_column', 
              'direction'
             ]
@@ -41,6 +43,7 @@ class InventoryHistorySearchSortService
         session(['search_inventory_date_start' => $request->search_inventory_date_start]);
         session(['search_inventory_date_end' => $request->search_inventory_date_end]);
         session(['search_inventory_result' => $request->search_inventory_result]);
+        session(['search_disp' => $request->search_disp]);
         // 検索モードを「On」に設定（検索中であることを分かるようにしている）
         session(['search_mode' => 'On']);
         // 検索+ソート処理を実施
@@ -64,6 +67,8 @@ class InventoryHistorySearchSortService
         $query = $this->search_process(session('search_item_code'), session('search_individual_jan_code'), session('search_item_name_1'), session('search_item_name_2'), session('search_inventory_date_start'), session('search_inventory_date_end'), session('search_inventory_result'));
         // ソート処理
         $query = $this->sort_process($query, session('sort_column'), session('direction'));
+        // グループ処理
+        $query = $this->group_process($query);
         // CSV出力する情報を格納
         session(['inventory_history_list_export' => $query->get()]);
         // ページネーションの設定
@@ -113,6 +118,18 @@ class InventoryHistorySearchSortService
     {
         if (!empty($sort_column)) {
             $query = $query->orderBy($sort_column, $direction);
+        }
+        return $query;
+    }
+
+    public function group_process($query)
+    {
+        
+        // 表示単位が「日付」なら日付と商品の組み合わせで集計
+        if(session('search_disp') == '日付'){
+            // グループ化
+            $query = $query->select(DB::raw("inventory_date, operator_name, item_code, individual_jan_code, brand_name, item_name_1, item_name_2, sum(inventory_quantity) as inventory_quantity, logical_stock, if(sum(inventory_quantity) = logical_stock, 'OK', 'NG') as inventory_result"));
+            $query = $query->groupBy('inventory_date', 'operator_name', 'item_code', 'individual_jan_code', 'brand_name', 'item_name_1', 'item_name_2', 'logical_stock', 'inventory_result');
         }
         return $query;
     }

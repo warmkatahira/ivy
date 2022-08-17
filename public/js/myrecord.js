@@ -10933,11 +10933,18 @@ var inventory_result_ng_count = document.getElementById('inventory_result_ng_cou
 var today_inventory_result_ratio = null;
 
 window.onload = function () {
+  // 環境でパスを可変させる
+  if (true) {
+    var ajax_url = '/my_record_chart_ajax';
+  }
+
+  if (false) { var ajax_url; }
+
   $.ajax({
     headers: {
       'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
     },
-    url: '/ivy/my_record_chart_ajax',
+    url: ajax_url,
     type: 'GET',
     dataType: 'json',
     success: function success(data) {

@@ -18,25 +18,44 @@ const alert_success_div = document.getElementById('alert_success');
 window.onload = scan_set;
 
 window.document.onkeydown = function(event){
+    // 環境でパスを可変させる
+    if(process.env.MIX_APP_ENV === 'local'){
+        var ajax_url = '/inventory/' + scan_info.value;
+    }
+    if(process.env.MIX_APP_ENV === 'pro'){
+        var ajax_url = '/ivy/inventory/' + scan_info.value;
+    }
     // エンターが押下されて、商品スキャンに値がある場合
     if (event.key === 'Enter' && scan_info.value) {
         $.ajax({
             headers: {
                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
             },    
-            url: '/ivy/inventory/' + scan_info.value,
+            url: ajax_url,
             type: 'GET',
             dataType: 'json',
             success: function(data){
-                //message.innerHTML = '';
                 // 照合結果がNGの場合
                 if(data['item_searched_flg'] == false){
                     audio_play('ng');
                     // エラーメッセージを表示
                     error_msg(data['error_msg']);
                 }
+                // 照合は出来ているが、現在対象の商品ではない場合
+                if(data['item_difference_flg'] == true){
+                    var result = window.confirm("対象外の商品がスキャンされました。\n処理を実行しますか？\n\n" +
+                                                '商品名1:' + data['item']['item_name_1'] + "\n" +
+                                                '商品名2:' + data['item']['item_name_2']);
+                    // 「はい」が押下されたら今回の商品を数量1で検品確定
+                    if(result == true) {
+                        difference_item_confirm();
+                        error_msg('別商品の棚卸確定を実施しました。');
+                        scan_set();
+                        return false;
+                    }
+                }
                 // 照合結果がOKの場合
-                if(data['item_searched_flg'] == true){
+                if(data['item_difference_flg'] == false && data['item_searched_flg'] == true){
                     audio_play('ok');
                     // 棚卸数を更新
                     inventory_quantity.innerHTML = data['inventory_quantity'];
@@ -82,6 +101,31 @@ function audio_play(play_category){
         scan_ng_audio.play();
         scan_ng_audio.currentTime = 0;
     }
+}
+
+// 対象外の商品を棚卸確定を実施する
+function difference_item_confirm(){
+    // 環境でパスを可変させる
+    if(process.env.MIX_APP_ENV === 'local'){
+        var ajax_url = '/inventory_difference_confirm';
+    }
+    if(process.env.MIX_APP_ENV === 'pro'){
+        var ajax_url = '/ivy/inventory_difference_confirm';
+    }
+    $.ajax({
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        },    
+        url: ajax_url,
+        type: 'GET',
+        dataType: 'json',
+        success: function(data){
+            // ここでは何もしない（コントローラーで確定処理が行われている）
+        },
+        error: function(){
+            error_msg("通信に失敗しました");
+        }
+    });
 }
 
 // エラーメッセージ表示用

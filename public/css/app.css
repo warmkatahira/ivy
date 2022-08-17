@@ -767,9 +767,6 @@ select {
 .ml-10 {
   margin-left: 2.5rem;
 }
-.ml-2 {
-  margin-left: 0.5rem;
-}
 .mt-6 {
   margin-top: 1.5rem;
 }
@@ -781,6 +778,9 @@ select {
 }
 .mr-2 {
   margin-right: 0.5rem;
+}
+.ml-2 {
+  margin-left: 0.5rem;
 }
 .mt-8 {
   margin-top: 2rem;
@@ -1444,10 +1444,6 @@ select {
 .text-gray-900 {
   --tw-text-opacity: 1;
   color: rgb(17 24 39 / var(--tw-text-opacity));
-}
-.text-indigo-600 {
-  --tw-text-opacity: 1;
-  color: rgb(79 70 229 / var(--tw-text-opacity));
 }
 .text-black {
   --tw-text-opacity: 1;
