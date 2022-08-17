@@ -10934,11 +10934,11 @@ var today_inventory_result_ratio = null;
 
 window.onload = function () {
   // 環境でパスを可変させる
-  if (true) {
-    var ajax_url = '/my_record_chart_ajax';
-  }
-
   if (false) { var ajax_url; }
+
+  if (true) {
+    var ajax_url = '/ivy/my_record_chart_ajax';
+  }
 
   $.ajax({
     headers: {

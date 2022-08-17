@@ -10945,11 +10945,11 @@ window.onload = scan_set;
 
 window.document.onkeydown = function (event) {
   // 環境でパスを可変させる
-  if (true) {
-    var ajax_url = '/inventory/' + scan_info.value;
-  }
+  if (false) { var ajax_url; }
 
-  if (false) { var ajax_url; } // エンターが押下されて、商品スキャンに値がある場合
+  if (true) {
+    var ajax_url = '/ivy/inventory/' + scan_info.value;
+  } // エンターが押下されて、商品スキャンに値がある場合
 
 
   if (event.key === 'Enter' && scan_info.value) {
@@ -11036,11 +11036,11 @@ function audio_play(play_category) {
 
 function difference_item_confirm() {
   // 環境でパスを可変させる
-  if (true) {
-    var ajax_url = '/inventory_difference_confirm';
-  }
-
   if (false) { var ajax_url; }
+
+  if (true) {
+    var ajax_url = '/ivy/inventory_difference_confirm';
+  }
 
   $.ajax({
     headers: {
